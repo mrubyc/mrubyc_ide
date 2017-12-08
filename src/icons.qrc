@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/file_new.png</file>
+        <file>icons/file_open.png</file>
+        <file>icons/exec_write.png</file>
+        <file>icons/exec_compile.png</file>
+        <file>icons/serial_update.png</file>
+        <file>icons/file_save.png</file>
+        <file>icons/spinners.gif</file>
+    </qresource>
+</RCC>
