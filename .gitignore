@@ -1,0 +1,20 @@
+# Executables
+mrubyc_ide
+mrubyc_ide.app
+
+# Object files
+*.o
+*.a
+Makefile
+
+# temporary files
+ui_*.h
+moc_*.h
+moc_*.cpp
+qrc_*.cpp
+.qmake.stash
+*~
+
+# Mac
+.DS_Store
+*.dSYM
