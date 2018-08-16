@@ -123,11 +123,13 @@ void CompilerWidget::setupMrbcEnabled(int status)
 
 void CompilerWidget::changeMrbcComand()
 {
+    m_mrbcPathLineEdit->setText( m_mrbcPathLineEdit->text().trimmed() );
     m_buildSetting->setMrbcCommand(m_mrbcPathLineEdit->text());
 }
 
 void CompilerWidget::changeMrbcComandOptions()
 {
+    m_mrbcOptionsLineEdit->setText( m_mrbcOptionsLineEdit->text().trimmed() );
     m_buildSetting->setMrbcCommandOptions(m_mrbcOptionsLineEdit->text());
 }
 
