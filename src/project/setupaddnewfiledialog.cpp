@@ -73,7 +73,6 @@ QString SetupAddNewFileDialog::filePath() const
 
 void SetupAddNewFileDialog::accept()
 {
-
     if (m_nameLineEdit->text().isEmpty()) {
         m_statusLabel->setText(tr("Name is empty."));
         return;
@@ -82,6 +81,11 @@ void SetupAddNewFileDialog::accept()
         m_statusLabel->setText(tr("The path must not be empty."));
         return;
     }
+    QFileInfo finfo( m_nameLineEdit->text() );
+    if (finfo.suffix() == "") {
+      m_nameLineEdit->setText( m_nameLineEdit->text() + ".rb" );
+    }
+
     QFile file(filePath());
     if (file.exists()) {
         m_statusLabel->setText(tr("The file already exists."));
@@ -110,4 +114,3 @@ void SetupAddNewFileDialog::selectFileCreationLocation()
         m_locationLineEdit->setText(dir);
     }
 }
-
