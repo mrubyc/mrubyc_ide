@@ -81,11 +81,13 @@ void WriterWidget::setupWriterCommand()
 
 void WriterWidget::changeMrbwComand()
 {
+    m_mrbWriterLineEdit->setText( m_mrbWriterLineEdit->text().trimmed() );
     m_buildSetting->setMrbwCommand(m_mrbWriterLineEdit->text());
 }
 
 void WriterWidget::changeMrbwComandOptions()
 {
+    m_mrbWriterOptionsLineEdit->setText( m_mrbWriterOptionsLineEdit->text().trimmed() );
     m_buildSetting->setMrbwCommandOptions(m_mrbWriterOptionsLineEdit->text());
 }
 
