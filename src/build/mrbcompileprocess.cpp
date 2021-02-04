@@ -51,7 +51,7 @@ int MrbCompileProcess::exec()
         //// 1. Add inputed command option to a command option.
         QStringList args;
         if (!commandOptions.isEmpty()) {
-            args << commandOptions;
+	    args = commandOptions.split(" ");
         }
         //// 2. Add a comples file.
         args << relativeFilePath;

@@ -29,7 +29,7 @@ int MrbWriteProcess::exec()
     QStringList args;
     //// 1. Add inputed command option to a command option.
     if (!commandOptions.isEmpty())
-        args << commandOptions;
+        args = commandOptions.split(" ");
     //// 2. Add the port name.
     QString portName = m_buildSetting->portName();
     if (!portName.isEmpty()) {
