@@ -648,7 +648,7 @@ void MainWindow::closeFile()
 
 void MainWindow::openFile(MrcFile *mrcFile)
 {
-    qDebug();
+    qDebug() << "MainWindow::openFile(MrcFile *mrcFile)";
 
     QVariant editingFileParam;
     editingFileParam.setValue(mrcFile);
@@ -782,7 +782,7 @@ void MainWindow::on_projectTreeView_customContextMenuRequested(const QPoint &poi
     QMenu *menu = new QMenu(this);
     if (item->data()->isNormalFile()) {
         QAction *action;
-        action = menu->addAction(QString(tr("Open File")));
+        action = menu->addAction(QString(tr("Edit this file")));
         connect(action, &QAction::triggered, this, static_cast<void (MainWindow::*)()>(&MainWindow::openFile));
         menu->addAction(QString(tr("Remove File...")), this, &MainWindow::removeFile);
         menu->addAction(QString(tr("Duplicate File...")), this, &MainWindow::duplicateFile);
@@ -901,7 +901,7 @@ void MainWindow::renameFile()
 
 void MainWindow::openFile(const QModelIndex &index)
 {
-    qDebug();
+    qDebug() << "MainWindow::openFile()";
     if (index.isValid()) {
         MrcProjectTreeItem *item = static_cast<MrcProjectTreeItem*>(index.internalPointer());
         if (item) {
