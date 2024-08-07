@@ -37,6 +37,7 @@ SetupNewProjectDialog::SetupNewProjectDialog(QString defaultPath, QWidget *paren
     pathHLayout->addWidget(projectPathButton);
 
     QFormLayout *formLayout = new QFormLayout;
+    formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
     formLayout->addRow(tr("Project Name"), m_nameLineEdit);
     formLayout->addRow(tr("Create In"), pathHLayout);
 
