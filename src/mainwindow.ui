@@ -206,7 +206,7 @@
      <x>0</x>
      <y>0</y>
      <width>710</width>
-     <height>23</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -216,15 +216,9 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
-    <widget class="QMenu" name="menuNew">
-     <property name="title">
-      <string>New...</string>
-     </property>
-     <addaction name="actionCreateProject"/>
-     <addaction name="actionNewFile"/>
-     <addaction name="actionImportProject"/>
-    </widget>
-    <addaction name="menuNew"/>
+    <addaction name="actionCreateProject"/>
+    <addaction name="actionNewFile"/>
+    <addaction name="actionImportProject"/>
     <addaction name="actionOpen"/>
     <addaction name="actionClose"/>
     <addaction name="actionSave"/>
@@ -359,7 +353,10 @@
   </action>
   <action name="actionCreateProject">
    <property name="text">
-    <string>Project</string>
+    <string>NewProject</string>
+   </property>
+   <property name="toolTip">
+    <string>Create new project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+N</string>
@@ -371,7 +368,7 @@
      <normaloff>:/icons/file_new.png</normaloff>:/icons/file_new.png</iconset>
    </property>
    <property name="text">
-    <string>File</string>
+    <string>NewFile</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
