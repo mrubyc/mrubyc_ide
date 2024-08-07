@@ -23,19 +23,13 @@ IdeSetupDialog::IdeSetupDialog(IdeSettingControl *settingControl, QWidget *paren
     createSettingOptions();
 
     m_configWidget = new QStackedWidget;
-    m_textEditorWidget = new FontColorsWidget(m_settingControl->ideSetting()->fontColorsSetting());
     m_compilerWidget = new CompilerWidget(m_settingControl->ideSetting()->buidSetting());
     m_writerWidget = new WriterWidget(m_settingControl->ideSetting()->buidSetting());
-    QTabWidget *textEditorTabWidget = new QTabWidget;
-    textEditorTabWidget->addTab(m_textEditorWidget, tr("Font and Colors"));
-    textEditorTabWidget->setTabsClosable(false);
-    QTabWidget *programTabWidget = new QTabWidget;
-    programTabWidget->addTab(m_compilerWidget, tr("Compiler"));
-    programTabWidget->addTab(m_writerWidget, tr("Writer"));
-    programTabWidget->setTabsClosable(false);
-    m_configWidget->addWidget(textEditorTabWidget);
-    m_configWidget->addWidget(programTabWidget);
+    m_textEditorWidget = new FontColorsWidget(m_settingControl->ideSetting()->fontColorsSetting());
 
+    m_configWidget->addWidget(m_compilerWidget);
+    m_configWidget->addWidget(m_writerWidget);
+    m_configWidget->addWidget(m_textEditorWidget);
 
     m_buttons = new QDialogButtonBox;
     m_buttons->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok|QDialogButtonBox::Apply);
@@ -86,12 +80,15 @@ void IdeSetupDialog::reject()
 
 void IdeSetupDialog::createSettingOptions()
 {
+    QListWidgetItem *compilerOption = new QListWidgetItem(m_settingOptionList);
+    compilerOption->setText(tr("Compiler"));
+    compilerOption->setSelected(true);
+
+    QListWidgetItem *writerOption = new QListWidgetItem(m_settingOptionList);
+    writerOption->setText(tr("Writer"));
+
     QListWidgetItem *textEditorOption = new QListWidgetItem(m_settingOptionList);
     textEditorOption->setText(tr("Text Editor"));
-    textEditorOption->setSelected(true);
-
-    QListWidgetItem *programOption = new QListWidgetItem(m_settingOptionList);
-    programOption->setText(tr("Build and Deploy"));
 }
 
 void IdeSetupDialog::changePage(QListWidgetItem *current, QListWidgetItem *previous)
