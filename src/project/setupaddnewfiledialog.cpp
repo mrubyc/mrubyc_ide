@@ -36,6 +36,7 @@ SetupAddNewFileDialog::SetupAddNewFileDialog(const QString &projectPath, QWidget
         pathHLayout->addWidget(projectPathButton);
 
         QFormLayout *formLayout = new QFormLayout;
+	formLayout->setFieldGrowthPolicy(QFormLayout::ExpandingFieldsGrow);
         formLayout->addRow(tr("File Name"), m_nameLineEdit);
         formLayout->addRow(tr("Create In"), pathHLayout);
 
