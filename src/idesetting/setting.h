@@ -17,6 +17,8 @@ namespace Key {
     static const QString MRBC_COMMAND_OPTS      = "MrbcCommandOptions";
     static const QString CLOUD_ENABLED          = "CloudEnabled";
     static const QString CLOUD_URL              = "CloudUrl";
+    static const QString CLEAR_CONSOLE_ENABLED  = "ClearConsoleEnabled";
+
     static const QString MRBW_COMMAND           = "MrbwCommand";
     static const QString MRBW_COMMAND_OPTS      = "MrbwCommandOptions";
     static const QString MRBW_PORT              = "Port";

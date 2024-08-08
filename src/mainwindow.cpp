@@ -671,6 +671,8 @@ void MainWindow::openFile()
 /*============================================================================*/
 void MainWindow::on_actionCompile_triggered()
 {
+    BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
+
     if (m_currentProject == Q_NULLPTR) {
             QMessageBox::information(this,
                                    tr("Compile"),
@@ -682,6 +684,10 @@ void MainWindow::on_actionCompile_triggered()
 
     // If the files are modified, save them
     on_actionSave_triggered();
+
+    if( buildSetting->clearConsoleEnabled() ) {
+	on_actionClearConsole_triggered();
+    }
 
     m_waitingSpinner->start();
 
@@ -697,7 +703,6 @@ void MainWindow::on_actionCompile_triggered()
 
 void MainWindow::on_actionWrite_triggered()
 {
-
     if (m_currentProject == Q_NULLPTR) {
             QMessageBox::information(this,
                                    tr("Compile"),

@@ -50,7 +50,7 @@ private Q_SLOTS:
     void changeMrbcComandOptions();
 
     /*!
-     * \brief Set up a mrbc command enabled.
+     * \brief Set up a cloud compiler enabled.
      * \param status
      */
     void setupCloudEnabled(int status);
@@ -59,6 +59,12 @@ private Q_SLOTS:
      * \brief Apply a cloud compiler url to the setting when an url is changed.
      */
     void cloudUrlChanged();
+
+    /*!
+     * \brief Set up a clear console enabled.
+     * \param status
+     */
+    void setupClearConsoleEnabled(int status);
 
 private:
     BuildSetting *m_buildSetting;
@@ -69,6 +75,8 @@ private:
 
     QCheckBox *m_cloudCompilerCheckBox;
     QLineEdit *m_cloudLineEdit;
+
+    QCheckBox *m_clearConsoleCheckBox;
 };
 
 #endif // COMPILERWIDGET_H

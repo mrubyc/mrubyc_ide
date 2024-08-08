@@ -121,6 +121,7 @@ void IdeSettingControl::save()
     m_config->setValue(Setting::Constants::Key::MRBC_COMMAND_OPTS, buildSetting->mrbcCommandOptions());
     m_config->setValue(Setting::Constants::Key::CLOUD_ENABLED, buildSetting->cloudEnabled());
     m_config->setValue(Setting::Constants::Key::CLOUD_URL, buildSetting->cloudUrl());
+    m_config->setValue(Setting::Constants::Key::CLEAR_CONSOLE_ENABLED, buildSetting->clearConsoleEnabled());
     m_config->endGroup();
     m_config->beginGroup(Setting::Constants::Key::WRITER);
     m_config->setValue(Setting::Constants::Key::MRBW_COMMAND, buildSetting->mrbwCommand());
@@ -182,6 +183,7 @@ void IdeSettingControl::load()
     buildSetting->setMrbcCommandOptions(m_config->value(Setting::Constants::Key::MRBC_COMMAND_OPTS).toString());
     buildSetting->setCloudEnabled(m_config->value(Setting::Constants::Key::CLOUD_ENABLED).toBool());
     buildSetting->setCloudUrl(m_config->value(Setting::Constants::Key::CLOUD_URL).toString());
+    buildSetting->setClearConsoleEnabled(m_config->value(Setting::Constants::Key::CLEAR_CONSOLE_ENABLED).toBool());
     m_config->endGroup();
     m_config->beginGroup(Setting::Constants::Key::WRITER);
     buildSetting->setMrbwCommand(m_config->value(Setting::Constants::Key::MRBW_COMMAND).toString());

@@ -6,6 +6,7 @@ BuildSetting::BuildSetting(QObject *parent)
     :AbstractSetting(parent)
     ,m_mrbcEnabled(false)
     ,m_cloudEnabled(false)
+    ,m_clearConsoleEnabled(false)
 {
 }
 
@@ -50,6 +51,7 @@ bool BuildSetting::cloudEnabled() const
 {
     return m_cloudEnabled;
 }
+
 void BuildSetting::setCloudUrl(const QString &url)
 {
     if (!m_cloudUrl.compare(url))
@@ -61,6 +63,19 @@ void BuildSetting::setCloudUrl(const QString &url)
 QString BuildSetting::cloudUrl() const
 {
     return m_cloudUrl;
+}
+
+void BuildSetting::setClearConsoleEnabled(bool enable)
+{
+    if (m_clearConsoleEnabled == enable)
+        return;
+
+    m_clearConsoleEnabled = enable;
+    setModified(true);
+}
+bool BuildSetting::clearConsoleEnabled() const
+{
+    return m_clearConsoleEnabled;
 }
 
 void BuildSetting::setMrbwCommand(const QString &path)
@@ -124,8 +139,8 @@ void BuildSetting::clear()
     m_mrbcCommandOptions = Q_NULLPTR;
     m_cloudEnabled = false;
     m_cloudUrl = Q_NULLPTR;
+    m_clearConsoleEnabled = false;
     m_mrbwCommand = Q_NULLPTR;
     m_mrbwCommandOptions = Q_NULLPTR;
     m_portName = Q_NULLPTR;
 }
-

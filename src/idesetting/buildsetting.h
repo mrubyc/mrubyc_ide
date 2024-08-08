@@ -74,6 +74,17 @@ public:
     QString cloudUrl() const;
 
     /*!
+     * \brief Set ClearConsoleEnabled flag
+     * \param enable if true, checked. otherwise, un-checked.
+     */
+    void setClearConsoleEnabled(bool enable);
+    /*!
+     * \brief Get clearConsoleEnabled flag.
+     * \return if checked, true. otherwise, false.
+     */
+    bool clearConsoleEnabled() const;
+
+    /*!
      * \brief Set Mrbw Command path.
      * \param path the path for mrbwriter command
      */
@@ -119,6 +130,8 @@ private:
 
     bool m_cloudEnabled;
     QString m_cloudUrl;
+
+    bool m_clearConsoleEnabled;
 
     QString m_mrbwCommand;
     QString m_mrbwCommandOptions;

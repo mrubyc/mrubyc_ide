@@ -20,6 +20,7 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     QLabel *mrbcLabel = new QLabel(tr("mrbc"));
     m_mrbcPathLineEdit = new QLineEdit;
     QPushButton *buttonSelectCompiler = new QPushButton(tr("..."));
+
     QLabel *mrbcOptionsLabel = new QLabel(tr("Options"));
     m_mrbcOptionsLineEdit = new QLineEdit;
 
@@ -29,11 +30,13 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     m_cloudLineEdit = new QLineEdit;
     QPushButton *buttonServerTest = new QPushButton(tr("Test"));
 
+    m_clearConsoleCheckBox = new QCheckBox(tr("Clear console before compile"));
+
     // layout
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->addWidget(mrbcLabel, 0, 0);
     gridLayout->addWidget(m_mrbcPathLineEdit, 0, 1);
-    gridLayout->addWidget(buttonSelectCompiler, 0,2);
+    gridLayout->addWidget(buttonSelectCompiler, 0, 2);
     gridLayout->addWidget(mrbcOptionsLabel, 1, 0);
     gridLayout->addWidget(m_mrbcOptionsLineEdit, 1, 1, 1, 2);
 
@@ -42,13 +45,14 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     cloudHLayout->addWidget(m_cloudLineEdit);
     cloudHLayout->addWidget(buttonServerTest);
 
-
     QVBoxLayout *verticalLayout = new QVBoxLayout;
     verticalLayout->addWidget(m_localCompilerCheckBox);
     verticalLayout->addLayout(gridLayout);
     verticalLayout->addStretch();
     verticalLayout->addWidget(m_cloudCompilerCheckBox);
     verticalLayout->addLayout(cloudHLayout);
+    verticalLayout->addStretch();
+    verticalLayout->addWidget(m_clearConsoleCheckBox);
     verticalLayout->addStretch();
 
     setLayout(verticalLayout);
@@ -59,6 +63,7 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     m_mrbcOptionsLineEdit->setText(m_buildSetting->mrbcCommandOptions());
     m_cloudCompilerCheckBox->setCheckState(CONV_BOOL_TO_CHK_STS(m_buildSetting->cloudEnabled()));
     m_cloudLineEdit->setText(m_buildSetting->cloudUrl());
+    m_clearConsoleCheckBox->setCheckState(CONV_BOOL_TO_CHK_STS(m_buildSetting->clearConsoleEnabled()));
 
 
     // set a button on a relative slot.
@@ -70,6 +75,7 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     connect(m_mrbcOptionsLineEdit, &QLineEdit::editingFinished, this, &CompilerWidget::changeMrbcComandOptions);
     connect(m_cloudCompilerCheckBox, &QCheckBox::stateChanged, this, &CompilerWidget::setupCloudEnabled);
     connect(m_cloudLineEdit, &QLineEdit::editingFinished, this, &CompilerWidget::cloudUrlChanged);
+    connect(m_clearConsoleCheckBox, &QCheckBox::stateChanged, this, &CompilerWidget::setupClearConsoleEnabled);
 }
 
 CompilerWidget::~CompilerWidget()
@@ -141,4 +147,9 @@ void CompilerWidget::setupCloudEnabled(int status)
 void CompilerWidget::cloudUrlChanged()
 {
     m_buildSetting->setCloudUrl(m_cloudLineEdit->text());
+}
+
+void CompilerWidget::setupClearConsoleEnabled(int status)
+{
+    m_buildSetting->setClearConsoleEnabled(static_cast<Qt::CheckState>(status));
 }
