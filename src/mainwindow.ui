@@ -173,7 +173,7 @@
             </sizepolicy>
            </property>
            <property name="textInteractionFlags">
-            <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
+            <set>Qt::TextEditorInteraction</set>
            </property>
           </widget>
          </widget>

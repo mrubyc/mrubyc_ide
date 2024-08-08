@@ -57,7 +57,7 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     m_waitingSpinner = new WaitingSpinner(this);
 
     ui->txtConsole->setContextMenuPolicy(Qt::NoContextMenu);
-    ui->txtConsole->setReadOnly(true);
+    //ui->txtConsole->setReadOnly(true);
     ui->txtConsole->setUndoRedoEnabled(false);
 
     m_errorFormat.setFontWeight(QFont::Bold);
