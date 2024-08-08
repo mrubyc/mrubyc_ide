@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>710</width>
-    <height>560</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -136,7 +136,7 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string>X</string>
+              <string>XX</string>
              </property>
             </widget>
            </item>
@@ -198,6 +198,7 @@
    <addaction name="actionCompile"/>
    <addaction name="actionWrite"/>
    <addaction name="separator"/>
+   <addaction name="actionClearConsole"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -205,8 +206,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>710</width>
-     <height>24</height>
+     <width>1000</width>
+     <height>21</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -380,6 +381,10 @@
    </property>
   </action>
   <action name="actionClearConsole">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/eraser.png</normaloff>:/icons/eraser.png</iconset>
+   </property>
    <property name="text">
     <string>Clear Console</string>
    </property>

@@ -7,5 +7,6 @@
         <file>icons/serial_update.png</file>
         <file>icons/file_save.png</file>
         <file>icons/spinners.gif</file>
+        <file>icons/eraser.png</file>
     </qresource>
 </RCC>
