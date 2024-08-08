@@ -36,11 +36,11 @@ void CompositProcess::execute()
         emit messageSent(tr("Starting: \"%1\"\n").arg(name), AbstractProcess::INFOMATION);
         int ret = process->exec();
         if (ret) {
-            emit messageSent(tr("The process \"%1\" exited abnormally.\n").arg(name), AbstractProcess::INFOMATION);
+            emit messageSent(tr("The process \"%1\" exited abnormally.\n\n").arg(name), AbstractProcess::INFOMATION);
             result = ret;
             break;
         }
-        emit messageSent(tr("The process \"%1\" exited normally.\n").arg(name), AbstractProcess::INFOMATION);
+        emit messageSent(tr("The process \"%1\" exited normally.\n\n").arg(name), AbstractProcess::INFOMATION);
     }
     emit finished(result);
 
