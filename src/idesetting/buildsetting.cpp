@@ -26,6 +26,7 @@ bool BuildSetting::mrbcEnabled() const
 {
     return m_mrbcEnabled;
 }
+
 void BuildSetting::setMrbcCommand(const QString &path)
 {
     if (!m_mrbcCommand.compare(path))
@@ -37,6 +38,19 @@ void BuildSetting::setMrbcCommand(const QString &path)
 QString BuildSetting::mrbcCommand() const
 {
     return m_mrbcCommand;
+}
+
+void BuildSetting::setMrbcCommandOptions(const QString &mrbcCommandOptions)
+{
+    if (m_mrbcCommandOptions == mrbcCommandOptions)
+        return;
+
+    m_mrbcCommandOptions = mrbcCommandOptions;
+    setModified(true);
+}
+QString BuildSetting::mrbcCommandOptions() const
+{
+    return m_mrbcCommandOptions;
 }
 
 void BuildSetting::setCloudEnabled(bool enable)
@@ -90,9 +104,17 @@ QString BuildSetting::mrbwCommand() const
     return m_mrbwCommand;
 }
 
-QString BuildSetting::portName() const
+void BuildSetting::setMrbwCommandOptions(const QString &mrbwCommandOptions)
 {
-    return m_portName;
+    if (m_mrbwCommandOptions == mrbwCommandOptions)
+        return;
+
+    m_mrbwCommandOptions = mrbwCommandOptions;
+    setModified(true);
+}
+QString BuildSetting::mrbwCommandOptions() const
+{
+    return m_mrbwCommandOptions;
 }
 
 void BuildSetting::setPortName(const QString &portName)
@@ -103,34 +125,11 @@ void BuildSetting::setPortName(const QString &portName)
     m_portName = portName;
     setModified(true);
 }
-
-QString BuildSetting::mrbwCommandOptions() const
+QString BuildSetting::portName() const
 {
-    return m_mrbwCommandOptions;
+    return m_portName;
 }
 
-void BuildSetting::setMrbwCommandOptions(const QString &mrbwCommandOptions)
-{
-    if (m_mrbwCommandOptions == mrbwCommandOptions)
-        return;
-
-    m_mrbwCommandOptions = mrbwCommandOptions;
-    setModified(true);
-}
-
-QString BuildSetting::mrbcCommandOptions() const
-{
-    return m_mrbcCommandOptions;
-}
-
-void BuildSetting::setMrbcCommandOptions(const QString &mrbcCommandOptions)
-{
-    if (m_mrbcCommandOptions == mrbcCommandOptions)
-        return;
-
-    m_mrbcCommandOptions = mrbcCommandOptions;
-    setModified(true);
-}
 
 void BuildSetting::clear()
 {
