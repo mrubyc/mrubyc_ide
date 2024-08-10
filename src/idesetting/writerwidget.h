@@ -2,6 +2,7 @@
 #define WRITERWIDGET_H
 
 #include <QWidget>
+#include <QCheckBox>
 #include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
@@ -49,12 +50,21 @@ private Q_SLOTS:
      */
     void updateSirialPortList();
 
+    /*!
+     * \brief Change baud rate.
+     */
+    void changeBaudRate();
+
+
 private:
+    static const char * const TBL_BAUDRATE[];
+
     BuildSetting *m_buildSetting;
 
     QLineEdit *m_mrbWriterLineEdit;
     QLineEdit *m_mrbWriterOptionsLineEdit;
     QComboBox *m_portComboBox;
+    QComboBox *m_baudRate;
 };
 
 #endif // WRITERWIDGET_H

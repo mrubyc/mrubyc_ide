@@ -89,7 +89,6 @@ public:
      * \param path the path for mrbwriter command
      */
     void setMrbwCommand(const QString& path);
-
     /*!
      * \brief Get Mrbw Command path.
      * \return the path for mrbwriter command
@@ -119,6 +118,17 @@ public:
     QString portName() const;
 
     /*!
+     * \brief Set BaudRate
+     * \param n baud rate
+     */
+    void setBaudRate(const QString &baud);
+    /*!
+     * \brief Get Port Name
+     * \return baud rate.
+     */
+    QString baudRate() const;
+
+    /*!
      * \brief Clear this object's properties.
      */
     void clear();
@@ -137,6 +147,7 @@ private:
     QString m_mrbwCommandOptions;
 
     QString m_portName;
+    QString m_baudRate;
 };
 
 #endif // BUILDSETTING_H

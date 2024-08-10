@@ -127,6 +127,7 @@ void IdeSettingControl::save()
     m_config->setValue(Setting::Constants::Key::MRBW_COMMAND, buildSetting->mrbwCommand());
     m_config->setValue(Setting::Constants::Key::MRBW_COMMAND_OPTS, buildSetting->mrbwCommandOptions());
     m_config->setValue(Setting::Constants::Key::MRBW_PORT, buildSetting->portName());
+    m_config->setValue(Setting::Constants::Key::BAUD_RATE, buildSetting->baudRate());
     m_config->endGroup();
     m_config->endGroup();
 
@@ -189,6 +190,7 @@ void IdeSettingControl::load()
     buildSetting->setMrbwCommand(m_config->value(Setting::Constants::Key::MRBW_COMMAND).toString());
     buildSetting->setMrbwCommandOptions(m_config->value(Setting::Constants::Key::MRBW_COMMAND_OPTS).toString());
     buildSetting->setPortName(m_config->value(Setting::Constants::Key::MRBW_PORT).toString());
+    buildSetting->setBaudRate(m_config->value(Setting::Constants::Key::BAUD_RATE).toString());
     m_config->endGroup();
     m_config->endGroup();
 

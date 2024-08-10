@@ -45,7 +45,6 @@ IdeSetupDialog::IdeSetupDialog(IdeSettingControl *settingControl, QWidget *paren
 
     setWindowTitle(tr("mruby/c IDE Setting"));
 
-
     connect(m_settingOptionList, &QListWidget::currentItemChanged,
             this, &IdeSetupDialog::changePage);
     connect(m_buttons, &QDialogButtonBox::clicked, this, &IdeSetupDialog::clickButton);
@@ -56,16 +55,17 @@ IdeSetupDialog::~IdeSetupDialog()
 
 void IdeSetupDialog::accept()
 {
-    qDebug() << "okButtonClicked";
+    qDebug() << "IdeSetupDialog::accept()";
     if (m_settingControl->isModified()) {
         m_settingControl->save();
+	emit changed();
     }
     QDialog::accept();
 }
 
 void IdeSetupDialog::reject()
 {
-    qDebug() << "cancelButtonClicked";
+    qDebug() << "IdeSetupDialog::reject()";
     if (m_settingControl->isModified()) {
         QMessageBox::StandardButton reply;
         reply = QMessageBox::question(this, tr("Confirm"), tr("Are you sure to cancel the modification?"),
@@ -85,7 +85,7 @@ void IdeSetupDialog::createSettingOptions()
     compilerOption->setSelected(true);
 
     QListWidgetItem *writerOption = new QListWidgetItem(m_settingOptionList);
-    writerOption->setText(tr("Writer"));
+    writerOption->setText(tr("Writer and Console"));
 
     QListWidgetItem *textEditorOption = new QListWidgetItem(m_settingOptionList);
     textEditorOption->setText(tr("Text Editor"));

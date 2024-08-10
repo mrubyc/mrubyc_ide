@@ -130,6 +130,18 @@ QString BuildSetting::portName() const
     return m_portName;
 }
 
+void BuildSetting::setBaudRate(const QString &baud)
+{
+    if( m_baudRate == baud ) return;
+
+    m_baudRate = baud;
+    setModified(true);
+}
+QString BuildSetting::baudRate() const
+{
+    return m_baudRate;
+}
+
 
 void BuildSetting::clear()
 {
@@ -142,4 +154,5 @@ void BuildSetting::clear()
     m_mrbwCommand = Q_NULLPTR;
     m_mrbwCommandOptions = Q_NULLPTR;
     m_portName = Q_NULLPTR;
+    m_baudRate = Q_NULLPTR;
 }

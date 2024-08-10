@@ -21,6 +21,8 @@ public:
     explicit IdeSetupDialog(IdeSettingControl *settingControl, QWidget *parent = Q_NULLPTR);
     ~IdeSetupDialog();
 
+Q_SIGNALS:
+    void changed();
 
 public Q_SLOTS:
     /*!

@@ -9,6 +9,8 @@
 #include <QString>
 #include <QThread>
 #include <QTextCharFormat>
+#include <QTimer>
+#include <QSerialPort>
 
 namespace Ui {
 class MainWindow;
@@ -47,6 +49,12 @@ Q_SIGNALS:
     void colorSchemeChanged(ColorSchemeSetting *colorSchemeSetting);
 
     void fileOpened(MrcFile* mrcFile);
+
+public Q_SLOTS:
+    /*!
+      \brief This signal is emitted whenever the IdeSettingDialog changes.
+    */
+    void on_consoleParameter_changed();
 
 private Q_SLOTS:
     /*==== file menu action ====*/
@@ -167,6 +175,12 @@ private Q_SLOTS:
      */
     void finishProcess(int result);
 
+    /*!
+      \brief for serial console
+    */
+    void on_consoleTimer_triggered();
+
+
 private:
     void createCompileCommand(CompositProcess *process);
     /*!
@@ -256,6 +270,16 @@ private:
 
     //! the thread works a some process.
     QThread m_workerThread;
+
+    //! for serial console.
+    QTimer m_consoleTimer;
+    QSerialPort m_consoleSerialPort;
+    enum {
+	SERIALCONSOLE_CLOSED,
+	SERIALCONSOLE_READY_OPEN,
+	SERIALCONSOLE_OPENED,
+	SERIALCONSOLE_READY_CLOSE,
+    } m_stateSerialConsole;
 };
 
 #endif // MAINWINDOW_H

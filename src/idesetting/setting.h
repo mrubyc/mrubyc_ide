@@ -22,6 +22,7 @@ namespace Key {
     static const QString MRBW_COMMAND           = "MrbwCommand";
     static const QString MRBW_COMMAND_OPTS      = "MrbwCommandOptions";
     static const QString MRBW_PORT              = "Port";
+    static const QString BAUD_RATE              = "BaudRate";
 
     // Group key for Font and Colors
     static const QString FONT_AND_COLORS        = "FontAndColors";

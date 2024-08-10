@@ -52,6 +52,9 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     ,m_projectControl(new MrcProjectControl(this))
     ,m_currentProject(Q_NULLPTR)
     ,m_workerThread(this)
+    ,m_consoleTimer(this)
+    ,m_consoleSerialPort(this)
+    ,m_stateSerialConsole(SERIALCONSOLE_CLOSED)
 {
     ui->setupUi(this);
     m_waitingSpinner = new WaitingSpinner(this);
@@ -100,6 +103,14 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     // Start/Stop for WaitingSpinner.
     connect(m_waitingSpinner, &WaitingSpinner::started, this, &MainWindow::startWaitingSpinner);
     connect(m_waitingSpinner, &WaitingSpinner::stopped, this, &MainWindow::stopWaitingSpinner);
+
+    // start serial console
+    BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
+    if( !buildSetting->portName().isEmpty() ) {
+	m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
+    }
+    connect(&m_consoleTimer, &QTimer::timeout, this, &MainWindow::on_consoleTimer_triggered);
+    m_consoleTimer.start( 1000 );
 
     m_workerThread.start();
 }
@@ -318,6 +329,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionSetup_triggered()
 {
     IdeSetupDialog setupDialog(m_settingControl);
+    connect(&setupDialog, &IdeSetupDialog::changed, this, &MainWindow::on_consoleParameter_changed);
     setupDialog.exec();
 }
 
@@ -685,11 +697,11 @@ void MainWindow::on_actionCompile_triggered()
     // If the files are modified, save them
     on_actionSave_triggered();
 
+    m_waitingSpinner->start();
+
     if( buildSetting->clearConsoleEnabled() ) {
 	on_actionClearConsole_triggered();
     }
-
-    m_waitingSpinner->start();
 
     CompositProcess *process = new CompositProcess;
 
@@ -703,6 +715,8 @@ void MainWindow::on_actionCompile_triggered()
 
 void MainWindow::on_actionWrite_triggered()
 {
+    BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
+
     if (m_currentProject == Q_NULLPTR) {
             QMessageBox::information(this,
                                    tr("Compile"),
@@ -717,12 +731,22 @@ void MainWindow::on_actionWrite_triggered()
 
     m_waitingSpinner->start();
 
+    if( buildSetting->clearConsoleEnabled() ) {
+	on_actionClearConsole_triggered();
+    }
+
+    if( m_stateSerialConsole == SERIALCONSOLE_OPENED ) {
+	m_stateSerialConsole = SERIALCONSOLE_READY_CLOSE;
+	while( m_stateSerialConsole != SERIALCONSOLE_CLOSED ) {
+	    qApp->processEvents();
+	}
+    }
+
     CompositProcess *process = new CompositProcess;
     // Create local or cloud compile command.
     createCompileCommand(process);
 
     // Create Write Commaand
-    BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
     MrbWriteProcess *writeProcess = new MrbWriteProcess(buildSetting, m_currentProject);
     writeProcess->setName(tr("Write"));
 
@@ -960,4 +984,53 @@ void MainWindow::finishProcess(int result)
 {
     Q_UNUSED(result);
     m_waitingSpinner->stop();
+
+    if( m_stateSerialConsole == SERIALCONSOLE_CLOSED ) {
+	m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
+    }
+}
+
+void MainWindow::on_consoleParameter_changed()
+{
+    m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
+    m_consoleTimer.setInterval( 1000 );
+}
+
+void MainWindow::on_consoleTimer_triggered()
+{
+    switch( m_stateSerialConsole ) {
+    case SERIALCONSOLE_CLOSED: {
+     } break;
+
+
+    case SERIALCONSOLE_READY_OPEN: {
+	BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
+
+	if( m_consoleSerialPort.isOpen() ) m_consoleSerialPort.close();
+	if( buildSetting->portName().isEmpty() ) return;
+
+	m_consoleSerialPort.setPortName( buildSetting->portName() );
+	if( !buildSetting->baudRate().isEmpty() ) {
+	    m_consoleSerialPort.setBaudRate( buildSetting->baudRate().toInt() );
+	}
+	if( !m_consoleSerialPort.open( QIODevice::ReadWrite ) ) return;	// port open error
+
+	m_stateSerialConsole = SERIALCONSOLE_OPENED;
+	m_consoleTimer.setInterval( 100 );
+     } break;
+
+
+    case SERIALCONSOLE_OPENED: {
+	if( !m_consoleSerialPort.bytesAvailable() ) return;
+	QByteArray read_data = m_consoleSerialPort.readAll();
+	sendMessage(read_data);
+     } break;
+
+
+    case SERIALCONSOLE_READY_CLOSE: {
+	m_consoleSerialPort.close();
+	m_stateSerialConsole = SERIALCONSOLE_CLOSED;
+	m_consoleTimer.setInterval( 1000 );
+     } break;
+    }
 }

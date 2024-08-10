@@ -8,6 +8,7 @@
 #include <QList>
 #include <QProcess>
 #include <QFileInfo>
+#include <QDebug>
 
 MrbWriteProcess::MrbWriteProcess(BuildSetting *buildSetting, MrcProject *mrcProejct, QObject *parent)
     :AbstractCommandProcess(buildSetting, mrcProejct, parent)
@@ -30,10 +31,14 @@ int MrbWriteProcess::exec()
     //// 1. Add inputed command option to a command option.
     if (!commandOptions.isEmpty())
         args = commandOptions.split(" ");
-    //// 2. Add the port name.
+    //// 2. Add the port name and baud rate.
     QString portName = m_buildSetting->portName();
     if (!portName.isEmpty()) {
         args << "-l" << portName;
+    }
+    QString baud = m_buildSetting->baudRate();
+    if( !baud.isEmpty() ) {
+	args << "-s" << baud;
     }
 
     //// 3. Add the files to write.

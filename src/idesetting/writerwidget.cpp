@@ -1,4 +1,5 @@
 #include "writerwidget.h"
+#include "setting.h"
 #include "buildsetting.h"
 
 #include <QLabel>
@@ -11,6 +12,8 @@
 #include <QSerialPortInfo>
 #include <QDebug>
 
+const char * const WriterWidget::TBL_BAUDRATE[] = {"", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "115200"};
+
 WriterWidget::WriterWidget(BuildSetting *buildSetting, QWidget *parent)
     : QWidget(parent)
     ,m_buildSetting(buildSetting)
@@ -19,22 +22,32 @@ WriterWidget::WriterWidget(BuildSetting *buildSetting, QWidget *parent)
     QLabel *mrbWriteLabel = new QLabel(tr("mrbwrite"));
     m_mrbWriterLineEdit = new QLineEdit;
     QPushButton *buttonSelectMrbWriter = new QPushButton(tr("..."));
+
     QLabel *mrbWriteOptionsLabel = new QLabel(tr("Options"));
     m_mrbWriterOptionsLineEdit = new QLineEdit;
+
     QLabel *portLabel = new QLabel(tr("Port"));
     m_portComboBox = new QComboBox;
     QPushButton *updatingPortButton = new QPushButton(tr("Update"));
+
+    QLabel *baudRateLabel = new QLabel(tr("Baud rate"));
+    m_baudRate = new QComboBox;
+    for( unsigned int i = 0; i < sizeof(TBL_BAUDRATE)/sizeof(TBL_BAUDRATE[0]); i++ ) {
+	m_baudRate->addItem( TBL_BAUDRATE[i] );
+    }
 
     // layout
     QGridLayout *gridLayout = new QGridLayout;
     gridLayout->addWidget(mrbWriteLabel, 0, 0);
     gridLayout->addWidget(m_mrbWriterLineEdit, 0, 1);
-    gridLayout->addWidget(buttonSelectMrbWriter, 0,2);
+    gridLayout->addWidget(buttonSelectMrbWriter, 0, 2);
     gridLayout->addWidget(mrbWriteOptionsLabel, 1, 0);
     gridLayout->addWidget(m_mrbWriterOptionsLineEdit, 1, 1, 1, 2);
     gridLayout->addWidget(portLabel, 2, 0);
     gridLayout->addWidget(m_portComboBox, 2, 1);
-    gridLayout->addWidget(updatingPortButton, 2,2 );
+    gridLayout->addWidget(updatingPortButton, 2, 2 );
+    gridLayout->addWidget(baudRateLabel, 3, 0);
+    gridLayout->addWidget(m_baudRate, 3, 1 );
 
     QVBoxLayout *verticalLayout = new QVBoxLayout;
     verticalLayout->addLayout(gridLayout);
@@ -45,6 +58,7 @@ WriterWidget::WriterWidget(BuildSetting *buildSetting, QWidget *parent)
     // set a value on an each element.
     m_mrbWriterLineEdit->setText(m_buildSetting->mrbwCommand());
     m_mrbWriterOptionsLineEdit->setText(m_buildSetting->mrbwCommandOptions());
+    m_baudRate->setCurrentText( m_buildSetting->baudRate() );
 
     // update serial port....
     updateSirialPortList();
@@ -59,6 +73,7 @@ WriterWidget::WriterWidget(BuildSetting *buildSetting, QWidget *parent)
     connect(m_portComboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &WriterWidget::changeSerialPort);
     connect(updatingPortButton, &QPushButton::clicked, this, &WriterWidget::updateSirialPortList);
 
+    connect(m_baudRate, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), this, &WriterWidget::changeBaudRate);
 }
 
 WriterWidget::~WriterWidget()
@@ -136,4 +151,10 @@ void WriterWidget::updateSirialPortList()
 
     m_portComboBox->setCurrentIndex(index);
     changeSerialPort(index);
+}
+
+void WriterWidget::changeBaudRate()
+{
+    QString baud = m_baudRate->currentText();
+    m_buildSetting->setBaudRate( baud );
 }
