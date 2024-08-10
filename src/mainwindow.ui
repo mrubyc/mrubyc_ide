@@ -226,6 +226,7 @@
     <addaction name="separator"/>
     <addaction name="actionSetup"/>
     <addaction name="separator"/>
+    <addaction name="actionAbout"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuExecute">
@@ -387,6 +388,11 @@
    </property>
    <property name="text">
     <string>Clear Console</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About...</string>
    </property>
   </action>
  </widget>

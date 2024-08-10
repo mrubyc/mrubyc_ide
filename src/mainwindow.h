@@ -74,6 +74,8 @@ private Q_SLOTS:
 
     void on_actionSetup_triggered();
 
+    void on_actionAbout_triggered();
+
 
     /*==== execution menu action ====*/
     void on_actionWrite_triggered();

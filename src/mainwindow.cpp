@@ -1,3 +1,5 @@
+#define APPLICATION_VERSION "1.2.0"
+
 #include "mainwindow.h"
 
 #include "mrubyc_ide.h"
@@ -57,6 +59,8 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     ,m_stateSerialConsole(SERIALCONSOLE_CLOSED)
 {
     ui->setupUi(this);
+
+    setWindowTitle(tr("mruby/c IDE " APPLICATION_VERSION));
     m_waitingSpinner = new WaitingSpinner(this);
 
     ui->txtConsole->setContextMenuPolicy(Qt::NoContextMenu);
@@ -103,6 +107,9 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     // Start/Stop for WaitingSpinner.
     connect(m_waitingSpinner, &WaitingSpinner::started, this, &MainWindow::startWaitingSpinner);
     connect(m_waitingSpinner, &WaitingSpinner::stopped, this, &MainWindow::stopWaitingSpinner);
+
+    //connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::on_actionAbout_triggered);
+
 
     // start serial console
     BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
@@ -331,6 +338,19 @@ void MainWindow::on_actionSetup_triggered()
     IdeSetupDialog setupDialog(m_settingControl);
     connect(&setupDialog, &IdeSetupDialog::changed, this, &MainWindow::onConsoleParameter_changed);
     setupDialog.exec();
+}
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::information(this,
+	tr("About"),
+	tr("mruby/c IDE Version " APPLICATION_VERSION "\n\n"
+	   "Copyright (C) 2017- \n"
+	   "  Kyushu Institute of Technology.\n"
+	   "  Shimane IT Open-Innovation Center.\n"
+	   "All rights reserved."
+	   ),
+        QMessageBox::Ok);
 }
 
 void MainWindow::setupMrcProjectTreeModel(MrcProject *project)
