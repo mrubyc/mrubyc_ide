@@ -109,7 +109,7 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     if( !buildSetting->portName().isEmpty() ) {
 	m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
     }
-    connect(&m_consoleTimer, &QTimer::timeout, this, &MainWindow::on_consoleTimer_triggered);
+    connect(&m_consoleTimer, &QTimer::timeout, this, &MainWindow::onConsoleTimer_triggered);
     m_consoleTimer.start( 1000 );
 
     m_workerThread.start();
@@ -329,7 +329,7 @@ void MainWindow::on_actionExit_triggered()
 void MainWindow::on_actionSetup_triggered()
 {
     IdeSetupDialog setupDialog(m_settingControl);
-    connect(&setupDialog, &IdeSetupDialog::changed, this, &MainWindow::on_consoleParameter_changed);
+    connect(&setupDialog, &IdeSetupDialog::changed, this, &MainWindow::onConsoleParameter_changed);
     setupDialog.exec();
 }
 
@@ -990,13 +990,13 @@ void MainWindow::finishProcess(int result)
     }
 }
 
-void MainWindow::on_consoleParameter_changed()
+void MainWindow::onConsoleParameter_changed()
 {
     m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
     m_consoleTimer.setInterval( 1000 );
 }
 
-void MainWindow::on_consoleTimer_triggered()
+void MainWindow::onConsoleTimer_triggered()
 {
     switch( m_stateSerialConsole ) {
     case SERIALCONSOLE_CLOSED: {

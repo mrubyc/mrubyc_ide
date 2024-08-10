@@ -54,7 +54,7 @@ public Q_SLOTS:
     /*!
       \brief This signal is emitted whenever the IdeSettingDialog changes.
     */
-    void on_consoleParameter_changed();
+    void onConsoleParameter_changed();
 
 private Q_SLOTS:
     /*==== file menu action ====*/
@@ -178,7 +178,7 @@ private Q_SLOTS:
     /*!
       \brief for serial console
     */
-    void on_consoleTimer_triggered();
+    void onConsoleTimer_triggered();
 
 
 private:
