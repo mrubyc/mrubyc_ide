@@ -269,7 +269,10 @@
      <normaloff>:/icons/file_open.png</normaloff>:/icons/file_open.png</iconset>
    </property>
    <property name="text">
-    <string>Open</string>
+    <string>OpenProject</string>
+   </property>
+   <property name="toolTip">
+    <string>Open project</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -349,8 +352,15 @@
    </property>
   </action>
   <action name="actionClose">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/file_close.png</normaloff>:/icons/file_close.png</iconset>
+   </property>
    <property name="text">
-    <string>Close</string>
+    <string>CloseProject</string>
+   </property>
+   <property name="toolTip">
+    <string>Close project</string>
    </property>
   </action>
   <action name="actionCreateProject">
