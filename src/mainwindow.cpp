@@ -112,6 +112,8 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
 
 
     // start serial console
+    connect(&m_consoleSerialPort, &QSerialPort::errorOccurred, this, &MainWindow::onConsoleSerialError_triggered);
+
     BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
     if( !buildSetting->portName().isEmpty() ) {
 	m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
@@ -1052,5 +1054,19 @@ void MainWindow::onConsoleTimer_triggered()
 	m_stateSerialConsole = SERIALCONSOLE_CLOSED;
 	m_consoleTimer.setInterval( 1000 );
      } break;
+    }
+}
+
+void MainWindow::onConsoleSerialError_triggered(QSerialPort::SerialPortError error_code)
+{
+    if( error_code == QSerialPort::NoError ) return;
+    m_consoleSerialPort.clearError();
+
+    if( m_stateSerialConsole == SERIALCONSOLE_OPENED ) {
+	m_stateSerialConsole = SERIALCONSOLE_READY_CLOSE;
+	while( m_stateSerialConsole != SERIALCONSOLE_CLOSED ) {
+	    qApp->processEvents();
+	}
+	m_stateSerialConsole = SERIALCONSOLE_READY_OPEN;
     }
 }

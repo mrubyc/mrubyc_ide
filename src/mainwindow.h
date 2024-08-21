@@ -180,8 +180,8 @@ private Q_SLOTS:
     /*!
       \brief for serial console
     */
+    void onConsoleSerialError_triggered(QSerialPort::SerialPortError error_code);
     void onConsoleTimer_triggered();
-
 
 private:
     void createCompileCommand(CompositProcess *process);
@@ -277,10 +277,10 @@ private:
     QTimer m_consoleTimer;
     QSerialPort m_consoleSerialPort;
     enum {
-	SERIALCONSOLE_CLOSED,
-	SERIALCONSOLE_READY_OPEN,
-	SERIALCONSOLE_OPENED,
-	SERIALCONSOLE_READY_CLOSE,
+        SERIALCONSOLE_CLOSED = 0,
+	SERIALCONSOLE_READY_OPEN = 1,
+	SERIALCONSOLE_OPENED = 2,
+	SERIALCONSOLE_READY_CLOSE = 3,
     } m_stateSerialConsole;
 };
 
