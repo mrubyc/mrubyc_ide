@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network widgets xml serialport
+QT       += core gui serialport network widgets xml
 include(./highlighter/highlighter.pri)
 include(./idesetting/idesetting.pri)
 include(./project/project.pri)
@@ -54,4 +54,7 @@ defineReplace(makeCopyCommand){
 copyfile1.commands += $$makeCopyCommand($${PWD}/config/mruby_ide.ini)
 QMAKE_EXTRA_TARGETS += copyfile1
 
-CONFIG += qt
+macx {
+    QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
+}
+
