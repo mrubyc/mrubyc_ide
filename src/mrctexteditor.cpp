@@ -31,7 +31,7 @@ int MrcTextEditor::lineNumberAreaWidth()
     if (MRUBYC_IDE::DEFAULT_NUM_DIGITS > digits)
         digits = MRUBYC_IDE::DEFAULT_NUM_DIGITS;
 
-    int space = MRUBYC_IDE::LINE_NUM_AREA_MARGIN + fontMetrics().width(QLatin1Char('8')) * ( digits + MRUBYC_IDE::MARK_CHAR_NUM );
+    int space = MRUBYC_IDE::LINE_NUM_AREA_MARGIN + fontMetrics().horizontalAdvance(QLatin1Char('8')) * ( digits + MRUBYC_IDE::MARK_CHAR_NUM );
 
     return space;
 }
@@ -86,7 +86,7 @@ void MrcTextEditor::lineNumberAreaPaintEvent(QPaintEvent *event)
                 painter.setPen(Qt::red);
                 painter.setBrush(QBrush(Qt::red, Qt::SolidPattern));
                 painter.drawEllipse(2, top,
-                                    fontMetrics().width(QLatin1Char('8'))*MRUBYC_IDE::MARK_CHAR_NUM-4,
+                                    fontMetrics().horizontalAdvance(QLatin1Char('8'))*MRUBYC_IDE::MARK_CHAR_NUM-4,
                                     fontMetrics().height()-4);
             }
         }

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport network widgets xml
+QT       += core gui network widgets xml serialport
 include(./highlighter/highlighter.pri)
 include(./idesetting/idesetting.pri)
 include(./project/project.pri)
@@ -53,3 +53,5 @@ defineReplace(makeCopyCommand){
 }
 copyfile1.commands += $$makeCopyCommand($${PWD}/config/mruby_ide.ini)
 QMAKE_EXTRA_TARGETS += copyfile1
+
+CONFIG += qt

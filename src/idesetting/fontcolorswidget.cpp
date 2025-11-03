@@ -161,14 +161,17 @@ FontColorsWidget::FontColorsWidget(FontColorsSetting *fontColorSetting, QWidget 
     connect(m_fontFamilyComboBox, &QFontComboBox::currentFontChanged, this, &FontColorsWidget::createFontSizeComboBox);
     connect(m_fontSizeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &FontColorsWidget::changeCurrentFontSize);
     // Manage a color scheme.
-    connect(m_settingCombo, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::currentIndexChanged),
-            this, static_cast<void (FontColorsWidget::*)(const QString&)>(&FontColorsWidget::changeCurrentColorScheme));
+    connect(m_settingCombo, &QComboBox::currentIndexChanged,
+            this, [=](int index) {
+            QString text = m_settingCombo->itemText(index);
+            changeCurrentColorScheme(text);
+    });
     connect(m_copySettingButton, &QPushButton::clicked, this, &FontColorsWidget::copyColorScheme);
     connect(m_deleteSettingButton, &QPushButton::clicked, this, &FontColorsWidget::deleteColorScheme);
     // Control for each color scheme.
     connect(m_colorSchemeItemList, &QListWidget::currentRowChanged, this, &FontColorsWidget::changeCurrentColorSchemeElement);
-    connect(m_boldCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupBoldStyle);
-    connect(m_italicCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupItaticStyle);
+    connect(m_boldCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupBoldStyle);
+    connect(m_italicCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupItaticStyle);
     connect(m_foregroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupForegroundColor);
     connect(m_foregroundClearButton, &QPushButton::clicked, this, &FontColorsWidget::clearForegroundColor);
     connect(m_backgroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupBackgroundColor);
@@ -393,9 +396,9 @@ void FontColorsWidget::decolatePreviewArea(const FontColorsWidget::DecorationTyp
 
         QString foreground = elementSetting->foreground();
         if (!foreground.isEmpty()) {
-           labelPalette.setColor(QPalette::Foreground, QColor(foreground));
+           labelPalette.setColor(QPalette::WindowText, QColor(foreground));
         } else {
-           labelPalette.setColor(QPalette::Foreground, QColor("black"));
+           labelPalette.setColor(QPalette::WindowText, QColor("black"));
         }
 
         // If the background color is not set in a setting, auto fill background is false.
@@ -404,7 +407,7 @@ void FontColorsWidget::decolatePreviewArea(const FontColorsWidget::DecorationTyp
         bool autoFillBackground = false;
         QString background = elementSetting->background();
         if (!background.isEmpty()) {
-            labelPalette.setColor(QPalette::Background, QColor(background));
+            labelPalette.setColor(QPalette::Window, QColor(background));
             autoFillBackground = true;
         } else {
             autoFillBackground = false;

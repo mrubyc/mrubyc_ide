@@ -34,7 +34,7 @@
 #include "ui_mainwindow.h"
 
 #include <QApplication>
-#include <QDesktopWidget>
+#include <QScreen>
 #include <QDebug>
 #include <QDir>
 #include <QFileDialog>
@@ -51,10 +51,10 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     ,ui(new Ui::MainWindow)
     ,m_mrcProjectTreeModel(Q_NULLPTR)
     ,m_settingControl(settingControl)
-    ,m_projectControl(new MrcProjectControl(this))
+    ,m_projectControl(new MrcProjectControl())
     ,m_currentProject(Q_NULLPTR)
-    ,m_workerThread(this)
-    ,m_consoleTimer(this)
+    ,m_workerThread()
+    ,m_consoleTimer()
     ,m_consoleSerialPort(this)
     ,m_stateSerialConsole(SERIALCONSOLE_CLOSED)
 {

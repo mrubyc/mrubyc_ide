@@ -17,7 +17,7 @@ class MainWindow;
 }
 
 QT_BEGIN_NAMESPACE
-QT_END_HEADER
+QT_END_NAMESPACE
 
 class WaitingSpinner;
 class IdeSettingControl;

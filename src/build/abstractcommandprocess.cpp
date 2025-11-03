@@ -5,6 +5,7 @@
 #include <QProcess>
 #include <QDebug>
 
+
 AbstractCommandProcess::AbstractCommandProcess(BuildSetting *buildSetting, MrcProject *mrcProejct, QObject *parent)
     : AbstractProcess(parent)
     ,m_buildSetting(buildSetting)

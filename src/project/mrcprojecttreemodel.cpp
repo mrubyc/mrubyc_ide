@@ -99,7 +99,7 @@ int MrcProjectTreeModel::columnCount(const QModelIndex &parent) const
 Qt::ItemFlags MrcProjectTreeModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
-        return 0;
+        return Qt::NoItemFlags;
 
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
@@ -109,11 +109,11 @@ bool MrcProjectTreeModel::setData(const QModelIndex &index, const QVariant &valu
     if (role != Qt::EditRole)
         return false;
 
-    qDebug() << "Type:" << value.type() << "Name:" << value.typeName();
+    qDebug() << "Type:" << value.typeId() << "Name:" << value.typeName();
 
     MrcProjectTreeItem *item = getItem(index);
 
-    if (value.type() == QVariant::String) {
+    if (value.typeId() == QMetaType::Type()) {
         QString newFileName = value.toString();
         emit textChanged(index, newFileName);
         emit dataChanged(index, index);
