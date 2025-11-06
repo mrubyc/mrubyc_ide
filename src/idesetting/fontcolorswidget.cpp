@@ -161,17 +161,14 @@ FontColorsWidget::FontColorsWidget(FontColorsSetting *fontColorSetting, QWidget 
     connect(m_fontFamilyComboBox, &QFontComboBox::currentFontChanged, this, &FontColorsWidget::createFontSizeComboBox);
     connect(m_fontSizeComboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &FontColorsWidget::changeCurrentFontSize);
     // Manage a color scheme.
-    connect(m_settingCombo, &QComboBox::currentIndexChanged,
-            this, [=](int index) {
-            QString text = m_settingCombo->itemText(index);
-            changeCurrentColorScheme(text);
-    });
+    connect(m_settingCombo, &QComboBox::currentTextChanged,
+            this, static_cast<void (FontColorsWidget::*)(const QString&)>(&FontColorsWidget::changeCurrentColorScheme));
     connect(m_copySettingButton, &QPushButton::clicked, this, &FontColorsWidget::copyColorScheme);
     connect(m_deleteSettingButton, &QPushButton::clicked, this, &FontColorsWidget::deleteColorScheme);
     // Control for each color scheme.
     connect(m_colorSchemeItemList, &QListWidget::currentRowChanged, this, &FontColorsWidget::changeCurrentColorSchemeElement);
-    connect(m_boldCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupBoldStyle);
-    connect(m_italicCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupItaticStyle);
+    connect(m_boldCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupBoldStyle);
+    connect(m_italicCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupItaticStyle);
     connect(m_foregroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupForegroundColor);
     connect(m_foregroundClearButton, &QPushButton::clicked, this, &FontColorsWidget::clearForegroundColor);
     connect(m_backgroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupBackgroundColor);
