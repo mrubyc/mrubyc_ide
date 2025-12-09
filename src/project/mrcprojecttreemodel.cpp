@@ -109,11 +109,11 @@ bool MrcProjectTreeModel::setData(const QModelIndex &index, const QVariant &valu
     if (role != Qt::EditRole)
         return false;
 
-    qDebug() << "Type:" << value.type() << "Name:" << value.typeName();
+    qDebug() << "Name:" << value.typeName();
 
     MrcProjectTreeItem *item = getItem(index);
 
-    if (value.type() == QVariant::String) {
+    if (value.metaType() == QMetaType::fromType<QString>()) {
         QString newFileName = value.toString();
         emit textChanged(index, newFileName);
         emit dataChanged(index, index);

@@ -70,12 +70,12 @@ CompilerWidget::CompilerWidget(BuildSetting *buildSetting, QWidget *parent)
     connect(buttonSelectCompiler, &QPushButton::clicked, this, &CompilerWidget::setupCompiler);
     connect(buttonServerTest, &QPushButton::clicked, this, &CompilerWidget::testCloudCompiler);
     // The value for a checkbox and a textfield is changed.
-    connect(m_localCompilerCheckBox, &QCheckBox::stateChanged, this, &CompilerWidget::setupMrbcEnabled);
+    connect(m_localCompilerCheckBox, &QCheckBox::checkStateChanged, this, &CompilerWidget::setupMrbcEnabled);
     connect(m_mrbcPathLineEdit, &QLineEdit::editingFinished, this, &CompilerWidget::changeMrbcComand);
     connect(m_mrbcOptionsLineEdit, &QLineEdit::editingFinished, this, &CompilerWidget::changeMrbcComandOptions);
-    connect(m_cloudCompilerCheckBox, &QCheckBox::stateChanged, this, &CompilerWidget::setupCloudEnabled);
+    connect(m_cloudCompilerCheckBox, &QCheckBox::checkStateChanged, this, &CompilerWidget::setupCloudEnabled);
     connect(m_cloudLineEdit, &QLineEdit::editingFinished, this, &CompilerWidget::cloudUrlChanged);
-    connect(m_clearConsoleCheckBox, &QCheckBox::stateChanged, this, &CompilerWidget::setupClearConsoleEnabled);
+    connect(m_clearConsoleCheckBox, &QCheckBox::checkStateChanged, this, &CompilerWidget::setupClearConsoleEnabled);
 }
 
 CompilerWidget::~CompilerWidget()

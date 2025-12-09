@@ -167,8 +167,8 @@ FontColorsWidget::FontColorsWidget(FontColorsSetting *fontColorSetting, QWidget 
     connect(m_deleteSettingButton, &QPushButton::clicked, this, &FontColorsWidget::deleteColorScheme);
     // Control for each color scheme.
     connect(m_colorSchemeItemList, &QListWidget::currentRowChanged, this, &FontColorsWidget::changeCurrentColorSchemeElement);
-    connect(m_boldCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupBoldStyle);
-    connect(m_italicCheckBox, &QCheckBox::stateChanged, this, &FontColorsWidget::setupItaticStyle);
+    connect(m_boldCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupBoldStyle);
+    connect(m_italicCheckBox, &QCheckBox::checkStateChanged, this, &FontColorsWidget::setupItaticStyle);
     connect(m_foregroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupForegroundColor);
     connect(m_foregroundClearButton, &QPushButton::clicked, this, &FontColorsWidget::clearForegroundColor);
     connect(m_backgroundSetupButton, &QPushButton::clicked, this, &FontColorsWidget::setupBackgroundColor);
@@ -183,7 +183,6 @@ FontColorsWidget::~FontColorsWidget()
 
 void FontColorsWidget::createFontSizeComboBox(const QFont &font)
 {
-    QFontDatabase database;
     m_fontSizeComboBox->clear();
 
     // If the values of specified family name and style name are not set correctly,
@@ -191,7 +190,7 @@ void FontColorsWidget::createFontSizeComboBox(const QFont &font)
     // Firstly, the method retrives a style string from QFontDatabase.
     // It uses to set them a parameter of that's method.
     // If it gets empty list, it uses standardsizes(), insted of that's method.
-    QStringList familyList = database.styles(font.family());
+    QStringList familyList = QFontDatabase::styles(font.family());
     QString style;
     if (familyList.size()) {
         style = familyList.at(0);
@@ -199,7 +198,7 @@ void FontColorsWidget::createFontSizeComboBox(const QFont &font)
 
     QList<int> fontSizeList;
 
-    fontSizeList = database.smoothSizes(font.family(), style);
+    fontSizeList = QFontDatabase::smoothSizes(font.family(), style);
     if (fontSizeList.size() <= 0) {
         fontSizeList = QFontDatabase::standardSizes();
     }
@@ -282,12 +281,13 @@ void FontColorsWidget::copyColorScheme()
             // Otherwise, copy from selected ColorSetting to new one as inputed name.
             ColorSchemeSetting *findColorSchemeSetting = m_fontColorsSetting->findColorScheme(inputedName);
             if (findColorSchemeSetting != Q_NULLPTR) {
-                QMessageBox mb(tr("Color Scheme"),
-                              tr("The Color Scheme is already registered.\nPlease input a name again."),
-                              QMessageBox::NoIcon,
-                              QMessageBox::Ok | QMessageBox::Default,
-                              QMessageBox::NoButton,
-                              QMessageBox::NoButton);
+                QMessageBox mb(
+                    QMessageBox::NoIcon,
+                    tr("Color Scheme"),
+                    tr("The Color Scheme is already registered.\nPlease input a name again."),
+                    QMessageBox::Ok
+                );
+                mb.setDefaultButton(QMessageBox::Ok);
                 mb.exec();
             } else {
                 // Copy new ColorScheme to a setting data.
@@ -320,13 +320,15 @@ void FontColorsWidget::deleteColorScheme()
         qWarning() << currentColorSchemeSettingName << "cannot be removed because it is diseditable.";
         return;
     } else {
-        QMessageBox mb("Delete Color Scheme",
-                      "Are you sure you want to delete this color scheme permanently?",
-                      QMessageBox::Question,
-                      QMessageBox::Yes | QMessageBox::Default,
-                      QMessageBox::Cancel | QMessageBox::Escape,
-                      QMessageBox::NoButton);
-       if (mb.exec() == QMessageBox::Yes) {
+        const auto ret = QMessageBox::question(
+            nullptr,
+            QObject::tr("Delete Color Scheme"),
+            QObject::tr("Are you sure you want to delete this color scheme permanently?"),
+            QMessageBox::Yes | QMessageBox::Cancel,
+            QMessageBox::Yes
+        );
+
+        if (ret == QMessageBox::Yes) {
             colorSchemeSettingList->removeAt(index);
 //            delete colorSchemeSetting; // FIXME:XXXXX need???
 

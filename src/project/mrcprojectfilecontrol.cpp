@@ -374,7 +374,12 @@ bool MrcProjectFileControl::readXmlDocument(QIODevice *device, QDomDocument *doc
     int errorLine;
     int errorColumn;
 
-    if (!document->setContent(device, true, &errorStr, &errorLine, &errorColumn)) {
+    const auto parseResult = document->setContent(device);
+    if (!parseResult) {
+        errorStr = parseResult.errorMessage;
+        errorLine = parseResult.errorLine;
+        errorColumn = parseResult.errorColumn;
+
         qCritical() << tr("Parse error at line %1, column %2:\n%3")
                         .arg(errorLine)
                         .arg(errorColumn)
