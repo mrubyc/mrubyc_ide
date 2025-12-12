@@ -51,10 +51,15 @@ defineReplace(makeCopyCommand){
     }
     return($(COPY_DIR) $$DEPEND_FILE $$APP_BUILD_DIR)
 }
-copyfile1.commands += $$makeCopyCommand($${PWD}/config/mruby_ide.ini)
-QMAKE_EXTRA_TARGETS += copyfile1
+#copyfile1.commands += $$makeCopyCommand($${PWD}/config/mruby_ide.ini)
+#QMAKE_EXTRA_TARGETS += copyfile1
 
 macx {
     QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
-}
+    QMAKE_INFO_PLIST = MyInfo.plist
+    ICON = mrubyc_ide_icon.icns
 
+    my_data.files = config/mrubyc_ide.ini
+    my_data.path  = Contents/MacOS
+    QMAKE_BUNDLE_DATA += my_data
+}
