@@ -1,18 +1,55 @@
-# Executables
-mrubyc_ide
-mrubyc_ide.app
+# Prerequisites
+*.d
 
-# Object files
+# Compiled Object files
+*.slo
+*.lo
 *.o
-*.a
-Makefile
+*.obj
 
-# temporary files
+# Precompiled Headers
+*.gch
+*.pch
+
+# Linker files
+*.ilk
+
+# Debugger Files
+*.pdb
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# debug information files
+*.dwo
+
+# Project temporary files
+Makefile
 ui_*.h
 moc_*.h
 moc_*.cpp
 qrc_*.cpp
 .qmake.stash
+
+# backup files
+*.bak*
 *~
 
 # Mac
