@@ -1,7 +1,15 @@
-﻿/**
- * @file
- * @brief   ColorSchemeHighlighter クラス - ソース
- */
+/*
+  mruby/c IDE
+
+  Copyright (C) 2016- Kyushu Institute of Technology.
+  Copyright (C) 2016- Shimane IT Open-Innovation Center.
+  Copyright (C) 2016- Software Research Associates, Inc.
+
+   All rights reserved. See LICENSE File.
+
+  @file    colorschemehighlighter.cpp
+  @brief   ColorSchemeHighlighter クラス - ソース
+*/
 
 #include "colorschemehighlighter.h"
 #include "colorschemesetting.h"

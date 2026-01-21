@@ -1,5 +1,14 @@
-#include "abstractcommandprocess.h"
+/*
+  mruby/c IDE
 
+  Copyright (C) 2016- Kyushu Institute of Technology.
+  Copyright (C) 2016- Shimane IT Open-Innovation Center.
+  Copyright (C) 2016- Software Research Associates, Inc.
+
+   All rights reserved. See LICENSE File.
+*/
+
+#include "abstractcommandprocess.h"
 #include "abstractprocess.h"
 
 #include <QProcess>

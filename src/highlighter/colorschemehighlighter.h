@@ -1,7 +1,16 @@
-﻿/**
- * @file
- * @brief   ColorSchemeHighlighter クラス - ヘッダ
- */
+/*
+  mruby/c IDE
+
+  Copyright (C) 2016- Kyushu Institute of Technology.
+  Copyright (C) 2016- Shimane IT Open-Innovation Center.
+  Copyright (C) 2016- Software Research Associates, Inc.
+
+   All rights reserved. See LICENSE File.
+
+  @file    colorschemehighlighter.h
+  @brief   ColorSchemeHighlighter クラス - ヘッダ
+*/
+
 
 #ifndef COLORSCHEMEHIGHLIGHTER_H
 #define COLORSCHEMEHIGHLIGHTER_H
