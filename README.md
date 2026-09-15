@@ -44,7 +44,7 @@ copy src\config\mrubyc_ide.ini src\release
 
 ## Binary download
 
-[ITOC mruby/c downloads](https://www.s-itoc.jp/support/technical-support/mrubyc/mrubyc-download/)
+[download page](https://mrubyc.github.io/downloads/)
 
 
 ## LICENSE
