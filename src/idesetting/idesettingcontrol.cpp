@@ -268,7 +268,7 @@ void IdeSettingControl::update(Setting::IDESettingGroup settingGroup)
 QString IdeSettingControl::defaultProjectLocation()
 {
     QString projectLocation;
-#if defined(Q_OS_MAC)
+#if defined(Q_OS_MACOS)
     QString applicationDirPath = QCoreApplication::applicationDirPath();
     QDir applicationDir(applicationDirPath);
     applicationDir.cdUp();

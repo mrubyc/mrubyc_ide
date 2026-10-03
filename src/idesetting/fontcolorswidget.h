@@ -29,7 +29,6 @@ class ColorSchemeElementSetting;
 class FontColorsWidget : public QWidget
 {
     Q_OBJECT
-    Q_ENUMS(DecorationType)
 public:
     explicit FontColorsWidget(FontColorsSetting *fontColorSetting, QWidget *parent = Q_NULLPTR);
     ~FontColorsWidget();
@@ -49,6 +48,7 @@ public:
         //! It will be changed the font family or size.
         FONT = 0x16
     };
+    Q_ENUM(DecorationType)
 
 private:
     /*!

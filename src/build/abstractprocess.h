@@ -20,7 +20,6 @@
 class AbstractProcess : public QObject
 {
     Q_OBJECT
-    Q_ENUMS(MessageType)
 public:
     /*!
      * \brief The MessageType enum
@@ -35,6 +34,7 @@ public:
         //! when a error message.
         ERROR
     };
+    Q_ENUM(MessageType)
 
 public:
     explicit AbstractProcess(QObject *parent = Q_NULLPTR);
