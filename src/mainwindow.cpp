@@ -1,14 +1,15 @@
 /*
   mruby/c IDE
 
-  Copyright (C) 2016- Kyushu Institute of Technology.
-  Copyright (C) 2016- Shimane IT Open-Innovation Center.
-  Copyright (C) 2016- Software Research Associates, Inc.
+  Copyright (C) 2016-     Kyushu Institute of Technology.
+  Copyright (C) 2016-2026 Shimane IT Open-Innovation Center.
+  Copyright (C) 2016-     Software Research Associates, Inc.
+  Copyright (C) 2026-     Shimane Institute for Industrial Technology.
 
    All rights reserved. See LICENSE File.
 */
 
-#define APPLICATION_VERSION "1.3.1"
+#define APPLICATION_VERSION "1.3.2"
 
 #include "mainwindow.h"
 
@@ -117,10 +118,14 @@ MainWindow::MainWindow(IdeSettingControl *settingControl, QWidget *parent) :
     connect(m_waitingSpinner, &WaitingSpinner::started, this, &MainWindow::startWaitingSpinner);
     connect(m_waitingSpinner, &WaitingSpinner::stopped, this, &MainWindow::stopWaitingSpinner);
 
-    //connect(ui->actionAbout, &QAction::triggered, this, &MainWindow::on_actionAbout_triggered);
-
-
-    // start serial console
+    // serial console
+    connect(ui->actionToggleConsoleAutoScroll, &QAction::triggered, this, [this](bool checked) {
+	m_flag_auto_scroll = checked;
+	if( checked ) {
+	    QScrollBar *scrollBar = ui->txtConsole->verticalScrollBar();
+	    if( !(scrollBar->value() == scrollBar->maximum())) scrollBar->setValue(scrollBar->maximum());
+	}
+    });
     connect(&m_consoleSerialPort, &QSerialPort::errorOccurred, this, &MainWindow::onConsoleSerialError_triggered);
 
     BuildSetting *buildSetting = m_settingControl->ideSetting()->buidSetting();
@@ -359,6 +364,7 @@ void MainWindow::on_actionAbout_triggered()
 	   "Copyright (C) 2017- \n"
 	   "  Kyushu Institute of Technology.\n"
 	   "  Shimane IT Open-Innovation Center.\n"
+	   "  Shimane Institute for Industrial Technology.\n"
 	   "All rights reserved."
 	   ),
         QMessageBox::Ok);
@@ -821,6 +827,7 @@ void MainWindow::on_actionClearConsole_triggered()
     ui->txtConsole->clear();
 }
 
+
 /*============================================================================*/
 /*==== Tree menu action ====*/
 /*============================================================================*/
@@ -983,20 +990,23 @@ void MainWindow::openFile(const QModelIndex &index)
 void MainWindow::sendMessage(const QString &message, AbstractProcess::MessageType type)
 {
 //    qDebug() << "M:" << message;
-    ui->txtConsole->moveCursor(QTextCursor::End);
     if (type == AbstractProcess::MessageType::ERROR) {
+        ui->txtConsole->moveCursor(QTextCursor::End);
         ui->txtConsole->textCursor().insertText(message, m_errorFormat);
     } else if (type == AbstractProcess::MessageType::INFOMATION) {
+        ui->txtConsole->moveCursor(QTextCursor::End);
         ui->txtConsole->textCursor().insertText(QString("%1: %2").arg(currentTime()).arg(message), m_infomationFormat);
     } else {
-        ui->txtConsole->textCursor().insertText(message, m_normalFormat);
+        if( m_flag_auto_scroll ) ui->txtConsole->moveCursor(QTextCursor::End);
+	ui->txtConsole->textCursor().insertText(message, m_normalFormat);
     }
-
+#if 0
     QScrollBar *scrollBar = ui->txtConsole->verticalScrollBar();
     bool isBottom = (scrollBar->value() == scrollBar->maximum());
     if (!isBottom){
        scrollBar->setValue(scrollBar->maximum());
     }
+#endif
 }
 
 void MainWindow::startWaitingSpinner()

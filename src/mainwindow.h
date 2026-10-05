@@ -69,29 +69,18 @@ public Q_SLOTS:
 private Q_SLOTS:
     /*==== file menu action ====*/
     void on_actionCreateProject_triggered();
-
     void on_actionImportProject_triggered();
-
     void on_actionNewFile_triggered();
-
     void on_actionSave_triggered();
-
     void on_actionOpen_triggered();
-
     void on_actionClose_triggered();
-
     void on_actionExit_triggered();
-
     void on_actionSetup_triggered();
-
     void on_actionAbout_triggered();
-
 
     /*==== execution menu action ====*/
     void on_actionWrite_triggered();
-
     void on_actionCompile_triggered();
-
     void on_actionClearConsole_triggered();
 
     /*==== popup menu action ==*/
@@ -292,6 +281,7 @@ private:
 	SERIALCONSOLE_OPENED = 2,
 	SERIALCONSOLE_READY_CLOSE = 3,
     } m_stateSerialConsole;
+    bool m_flag_auto_scroll = true;
 };
 
 #endif // MAINWINDOW_H
