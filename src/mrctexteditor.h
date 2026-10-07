@@ -24,7 +24,7 @@
  */
 class MrcTextEditor : public QPlainTextEdit
 {
-        Q_OBJECT
+    Q_OBJECT
 public:
     explicit MrcTextEditor(QWidget *parent = Q_NULLPTR);
 

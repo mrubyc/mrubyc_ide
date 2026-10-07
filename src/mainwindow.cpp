@@ -990,23 +990,29 @@ void MainWindow::openFile(const QModelIndex &index)
 void MainWindow::sendMessage(const QString &message, AbstractProcess::MessageType type)
 {
 //    qDebug() << "M:" << message;
+
+    bool flag_bottom = m_flag_auto_scroll ||
+      (type == AbstractProcess::MessageType::ERROR) ||
+      (type == AbstractProcess::MessageType::INFOMATION);
+
+    if( flag_bottom ) ui->txtConsole->moveCursor(QTextCursor::End);
+
+
     if (type == AbstractProcess::MessageType::ERROR) {
-        ui->txtConsole->moveCursor(QTextCursor::End);
         ui->txtConsole->textCursor().insertText(message, m_errorFormat);
     } else if (type == AbstractProcess::MessageType::INFOMATION) {
-        ui->txtConsole->moveCursor(QTextCursor::End);
         ui->txtConsole->textCursor().insertText(QString("%1: %2").arg(currentTime()).arg(message), m_infomationFormat);
     } else {
-        if( m_flag_auto_scroll ) ui->txtConsole->moveCursor(QTextCursor::End);
-	ui->txtConsole->textCursor().insertText(message, m_normalFormat);
+        ui->txtConsole->textCursor().insertText(message, m_normalFormat);
     }
-#if 0
-    QScrollBar *scrollBar = ui->txtConsole->verticalScrollBar();
-    bool isBottom = (scrollBar->value() == scrollBar->maximum());
-    if (!isBottom){
-       scrollBar->setValue(scrollBar->maximum());
+
+    if( flag_bottom ) {
+        QScrollBar *scrollBar = ui->txtConsole->verticalScrollBar();
+        bool isBottom = (scrollBar->value() == scrollBar->maximum());
+        if (!isBottom){
+	    scrollBar->setValue(scrollBar->maximum());
+	}
     }
-#endif
 }
 
 void MainWindow::startWaitingSpinner()
