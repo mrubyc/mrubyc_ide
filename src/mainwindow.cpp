@@ -465,6 +465,7 @@ void MainWindow::putAwayMrcProject()
     // Set up an initial text document for Code Editor.
     MrcTextDocument *document = m_tmpMrcFile->textDocument();
     ui->plainTextEdit->setDocument(document);
+    ui->plainTextEdit->setEnabled(true);
 }
 
 bool MainWindow::confirmCloseProject()
@@ -628,6 +629,7 @@ void MainWindow::changeCurrentDocument(int index)
     // setup active document.
     MrcTextDocument *mrcTextDocument = mrcFile->textDocument();
     ui->plainTextEdit->setDocument(mrcTextDocument);
+    ui->plainTextEdit->setEnabled(true);
 
     // Set up mark list.
     ui->plainTextEdit->clearMarkedNumList();
